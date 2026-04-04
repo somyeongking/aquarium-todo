@@ -1,0 +1,652 @@
+
+<style>
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
+:root {
+  --color-background-primary: rgba(255, 255, 255, 0.65);
+  --color-background-secondary: rgba(255, 255, 255, 0.4);
+  --color-background-tertiary: rgba(255, 255, 255, 0.2);
+  --color-background-danger: rgba(255, 100, 100, 0.15);
+  
+  --color-border-secondary: rgba(255, 255, 255, 0.4);
+  --color-border-tertiary: rgba(255, 255, 255, 0.3);
+  
+  --color-text-primary: #1F3045;
+  --color-text-secondary: #566473;
+  --color-text-tertiary: #7F8D9C;
+  --color-text-danger: #D32F2F;
+  
+  --border-radius-md: 12px;
+  --border-radius-lg: 20px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Pretendard', sans-serif;
+  background: linear-gradient(135deg, #E0F7FA 0%, #B2EBF2 50%, #80DEEA 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  color: var(--color-text-primary);
+}
+.app {
+  width: 100%;
+  max-width: 680px;
+  padding: 2.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 0 auto;
+}
+.trow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: flex-end;
+  justify-content: center;
+}
+.tc { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.tc:hover { transform: translateY(-6px); }
+.tc.active svg { filter: drop-shadow(0 8px 16px rgba(0,0,0,0.12)); }
+.tn { font-size: 13px; text-align: center; max-width: 115px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color 0.2s; }
+.addw { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.addbtn {
+  border: 1.5px dashed rgba(255,255,255,0.7);
+  border-radius: 18px;
+  background: rgba(255,255,255,0.15);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: var(--color-text-secondary);
+  font-size: 24px;
+  transition: all 0.2s;
+  font-family: 'Pretendard', sans-serif;
+  padding: 0;
+  backdrop-filter: blur(4px);
+}
+.addbtn span { font-size: 10px; font-weight: 500; }
+.addbtn:hover { border-color: rgba(29,158,117, 0.6); color: #1D9E75; background: rgba(255,255,255,0.3); }
+.panel {
+  background: var(--color-background-primary);
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: fi 0.3s ease;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+@keyframes fi { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.ph { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 600; color: var(--color-text-primary); }
+.pdot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+.ir { display: flex; gap: 10px; }
+.ti {
+  flex: 1;
+  height: 42px;
+  padding: 0 14px;
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--border-radius-md);
+  font-family: 'Pretendard', sans-serif;
+  font-size: 14px;
+  background: rgba(255,255,255,0.5);
+  color: var(--color-text-primary);
+  outline: none;
+  transition: all 0.2s;
+}
+.ti::placeholder { color: var(--color-text-tertiary); }
+.ti:focus { border-color: rgba(29,158,117, 0.6); box-shadow: 0 0 0 3px rgba(29,158,117,0.1); background: rgba(255,255,255,0.8); }
+.ab {
+  height: 42px;
+  padding: 0 18px;
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-family: 'Pretendard', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  transition: all 0.15s;
+  white-space: nowrap;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+}
+.ab:hover { filter: brightness(1.05); transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.12); }
+.ab:active { transform: translateY(1px); }
+.tlist { display: flex; flex-direction: column; gap: 8px; max-height: 250px; overflow-y: auto; padding-right: 4px; }
+.tlist::-webkit-scrollbar { width: 6px; }
+.tlist::-webkit-scrollbar-track { background: transparent; }
+.tlist::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
+.titem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-md);
+  background: rgba(255,255,255,0.45);
+  cursor: pointer;
+  transition: all 0.2s;
+  animation: si 0.2s ease;
+}
+.titem:hover { border-color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.65); transform: translateX(2px); }
+.titem.done { opacity: 0.6; }
+.titem.done .tt { text-decoration: line-through; color: var(--color-text-secondary); }
+@keyframes si { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: translateX(0); } }
+.cc { width: 22px; height: 22px; border-radius: 50%; border: 2px solid rgba(0,0,0,0.15); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; background: rgba(255,255,255,0.5); }
+.titem.done .cc { background: #1D9E75; border-color: #1D9E75; }
+.ck { width: 12px; height: 12px; opacity: 0; transition: opacity 0.15s; }
+.titem.done .ck { opacity: 1; }
+.tt { flex: 1; font-size: 14px; color: var(--color-text-primary); word-break: break-all; }
+.db {
+  width: 26px;
+  height: 26px;
+  border: none;
+  background: none;
+  color: var(--color-text-tertiary);
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  opacity: 0;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  padding: 0;
+}
+.titem:hover .db { opacity: 1; }
+.db:hover { background: var(--color-background-danger); color: var(--color-text-danger); }
+.em { padding: 1.5rem 0; text-align: center; font-size: 13px; color: var(--color-text-secondary); line-height: 1.8; opacity: 0.8; }
+.mo {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  animation: fi 0.2s ease;
+}
+.mbox {
+  background: var(--color-background-primary);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--color-border-secondary);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.mbox h3 { font-size: 17px; font-weight: 600; color: var(--color-text-primary); margin-bottom: 4px; }
+.mbox input, .mbox select {
+  height: 42px;
+  padding: 0 14px;
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--border-radius-md);
+  font-family: 'Pretendard', sans-serif;
+  font-size: 14px;
+  background: rgba(255,255,255,0.5);
+  color: var(--color-text-primary);
+  outline: none;
+  width: 100%;
+  transition: all 0.2s;
+}
+.mbox input:focus, .mbox select:focus { border-color: rgba(29,158,117, 0.6); box-shadow: 0 0 0 3px rgba(29,158,117,0.1); background: rgba(255,255,255,0.8); }
+.cpick { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+.cd { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 2px solid transparent; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.cd.sel { transform: scale(1.2); border-color: white; outline: 3px solid rgba(0,0,0,0.15); outline-offset: 0; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+.mbtns { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+.mbtn { height: 40px; padding: 0 20px; border-radius: var(--border-radius-md); font-family: 'Pretendard', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.mbtn.cn { background: rgba(255,255,255,0.4); border: 1px solid var(--color-border-secondary); color: var(--color-text-secondary); }
+.mbtn.cn:hover { background: rgba(255,255,255,0.7); }
+.mbtn.ok { background: #1D9E75; border: none; color: #fff; box-shadow: 0 3px 6px rgba(29,158,117,0.2); }
+.mbtn.ok:hover { filter: brightness(1.05); transform: translateY(-1px); box-shadow: 0 4px 8px rgba(29,158,117,0.3); }
+.mbtn.ok:active { transform: translateY(1px); }
+</style>
+
+<div id="authApp" class="app" style="align-items:center; max-width:400px; margin: 6vh auto 0;">
+  <div class="panel" style="width:100%; text-align:center; padding: 2rem; border-top: 5px solid var(--color-background-tertiary);">
+    <h2 style="margin-bottom:1.5rem; font-weight:800; letter-spacing:-0.5px;" id="authTitle">로그인</h2>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <input type="text" id="authUsername" class="ti" placeholder="아이디" maxlength="20" />
+      <input type="password" id="authPassword" class="ti" placeholder="비밀번호" maxlength="20" onkeydown="if(event.key==='Enter')submitAuth()"/>
+      <button class="ab" id="authSubmitBtn" style="background:#1D9E75; margin-top:8px;" onclick="submitAuth()">로그인</button>
+      <button class="mbtn cn" id="authToggleBtn" style="margin-top:4px; font-size:13px;" onclick="toggleAuthMode()">회원가입이 필요하신가요?</button>
+      <div id="authError" style="color:var(--color-text-danger); font-size:13px; min-height:20px; margin-top:4px; font-weight:500;"></div>
+    </div>
+  </div>
+</div>
+
+<div id="mainApp" style="display:none; width: 100%;">
+  <div style="display:flex; justify-content:flex-end; padding:15px 1.5rem 0; width:100%; max-width:680px; margin:0 auto; gap:10px;">
+    <span id="welcomeUser" style="font-size:14px; align-self:center; color:var(--color-text-secondary); font-weight:600;"></span>
+    <button class="mbtn cn" style="height:32px; font-size:12px; padding:0 12px; border-radius:8px;" onclick="logout()">로그아웃</button>
+  </div>
+  <div class="app" style="padding-top:1rem;">
+    <div class="trow" id="trow"></div>
+    <div id="parea"></div>
+  </div>
+</div>
+
+<script>
+const COLORS=[
+  {id:'teal',w:'#1D9E75',l:'#9FE1CB',bg:'#E1F5EE',tx:'#085041',f1:'#FF9F7F',f2:'#FFD166'},
+  {id:'blue',w:'#378ADD',l:'#B5D4F4',bg:'#E6F1FB',tx:'#0C447C',f1:'#FF8FAB',f2:'#FFA94D'},
+  {id:'coral',w:'#D85A30',l:'#F5C4B3',bg:'#FAECE7',tx:'#4A1B0C',f1:'#74C0FC',f2:'#63E6BE'},
+  {id:'pink',w:'#D4537E',l:'#F4C0D1',bg:'#FBEAF0',tx:'#4B1528',f1:'#FFD166',f2:'#95E1C1'},
+  {id:'purple',w:'#7F77DD',l:'#CECBF6',bg:'#EEEDFE',tx:'#26215C',f1:'#FFA94D',f2:'#FF8FAB'},
+  {id:'amber',w:'#BA7517',l:'#FAC775',bg:'#FAEEDA',tx:'#412402',f1:'#74C0FC',f2:'#63E6BE'},
+];
+
+// 4 distinct aquarium shapes
+const AQTYPES=[
+  { // 0: 둥근 어항 (classic fishbowl)
+    key:'bowl',label:'둥근 어항',vw:92,vh:116,
+    clip:'M 32,12 L 60,12 L 60,26 Q 84,32 84,65 Q 84,100 46,100 Q 8,100 8,65 Q 8,32 32,26 Z',
+    wTop:12,wBot:98,
+    fb:{x1:15,x2:77,y1:32,y2:92},
+    bx:[24,46,68],
+    sand:{cx:46,cy:97,rx:35,ry:5.5},
+    pts:[{x:18,y:94,h:26,v:0},{x:70,y:94,h:20,v:1}],
+    dec:'shell',fn:2,
+  },
+  { // 1: 수족관 (wide rectangular aquarium)
+    key:'rect',label:'수족관',vw:120,vh:95,
+    clip:'M 6,6 L 114,6 L 114,82 Q 114,86 110,86 L 10,86 Q 6,86 6,82 Z',
+    wTop:6,wBot:82,
+    fb:{x1:12,x2:108,y1:14,y2:76},
+    bx:[22,60,96],
+    sand:{cx:60,cy:82,rx:52,ry:5},
+    pts:[{x:20,y:80,h:28,v:2},{x:34,y:80,h:20,v:1},{x:86,y:80,h:26,v:0},{x:100,y:80,h:18,v:2}],
+    dec:'castle',fn:3,
+    legs:true,
+  },
+  { // 2: 육각 어항 (hexagonal)
+    key:'hex',label:'육각 어항',vw:86,vh:112,
+    clip:'M 43,6 L 77,25 L 77,87 L 43,106 L 9,87 L 9,25 Z',
+    wTop:6,wBot:104,
+    fb:{x1:15,x2:71,y1:26,y2:96},
+    bx:[28,43,60],
+    sand:{cx:43,cy:101,rx:30,ry:5},
+    pts:[{x:22,y:98,h:32,v:2},{x:60,y:98,h:26,v:1}],
+    dec:'starfish',fn:2,
+  },
+  { // 3: 키다리 어항 (tall tube/cylinder)
+    key:'tall',label:'키다리 어항',vw:70,vh:124,
+    clip:'M 6,18 Q 6,4 35,4 Q 64,4 64,18 L 64,106 Q 64,120 35,120 Q 6,120 6,106 Z',
+    wTop:4,wBot:118,
+    fb:{x1:12,x2:58,y1:22,y2:110},
+    bx:[20,35,52],
+    sand:{cx:35,cy:115,rx:25,ry:5.5},
+    pts:[{x:18,y:112,h:36,v:0},{x:52,y:112,h:28,v:1}],
+    dec:'coral',fn:2,
+  },
+];
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function getPct(cat){if(!cat.tasks.length)return 0;return cat.tasks.filter(t=>t.done).length/cat.tasks.length}
+
+function mkPlant(x,y,h,v,col){
+  if(v===0)return `<path d="M${x},${y} Q${x+8},${y-h*.35} ${x},${y-h*.7} Q${x-8},${y-h} ${x},${y-h}" fill="none" stroke="${col}" stroke-width="3" stroke-linecap="round"/><path d="M${x},${y-h*.55} Q${x+11},${y-h*.65} ${x+13},${y-h*.55}" fill="none" stroke="${col}" stroke-width="1.8" stroke-linecap="round"/>`;
+  if(v===1)return `<ellipse cx="${x}" cy="${y-h*.5}" rx="7.5" ry="${h*.53}" fill="${col}" opacity=".75"/><line x1="${x}" y1="${y}" x2="${x}" y2="${y-h}" stroke="${col}" stroke-width="1.5"/>`;
+  return `<line x1="${x}" y1="${y}" x2="${x}" y2="${y-h}" stroke="${col}" stroke-width="2.2"/><line x1="${x}" y1="${y-h*.28}" x2="${x+9}" y2="${y-h*.46}" stroke="${col}" stroke-width="1.6" stroke-linecap="round"/><line x1="${x}" y1="${y-h*.28}" x2="${x-9}" y2="${y-h*.46}" stroke="${col}" stroke-width="1.6" stroke-linecap="round"/><line x1="${x}" y1="${y-h*.58}" x2="${x+7}" y2="${y-h*.74}" stroke="${col}" stroke-width="1.4" stroke-linecap="round"/><line x1="${x}" y1="${y-h*.58}" x2="${x-7}" y2="${y-h*.74}" stroke="${col}" stroke-width="1.4" stroke-linecap="round"/>`;
+}
+
+function mkDecor(type,t){
+  const {cx,cy}=t.sand;
+  if(type==='shell')return `<path d="M${cx-9},${cy-1} Q${cx},${cy-10} ${cx+9},${cy-1} Q${cx+5},${cy+3} ${cx},${cy+2} Q${cx-5},${cy+3} ${cx-9},${cy-1}Z" fill="#f5cc88" stroke="#d4a860" stroke-width=".8"/><line x1="${cx}" y1="${cy-6}" x2="${cx}" y2="${cy+1}" stroke="#c8a060" stroke-width=".6"/><line x1="${cx-4}" y1="${cy-3}" x2="${cx+4}" y2="${cy-3}" stroke="#c8a060" stroke-width=".5"/>`;
+  if(type==='starfish'){const p=[];for(let i=0;i<5;i++){const a=(i*72-90)*Math.PI/180,a2=(i*72+36-90)*Math.PI/180;p.push(`${(cx+4)+9*Math.cos(a)},${(cy-4)+9*Math.sin(a)}`);p.push(`${(cx+4)+4*Math.cos(a2)},${(cy-4)+4*Math.sin(a2)}`)}return `<polygon points="${p.join(' ')}" fill="#FFAB76" stroke="#E08050" stroke-width=".8" opacity=".9"/>`;}
+  if(type==='castle')return `<rect x="${cx-15}" y="${cy-18}" width="30" height="16" rx="1.5" fill="#C8D8E8" stroke="#98AABB" stroke-width=".8"/><rect x="${cx-17}" y="${cy-24}" width="8" height="8" rx="1" fill="#C8D8E8" stroke="#98AABB" stroke-width=".8"/><rect x="${cx-4}" y="${cy-24}" width="8" height="8" rx="1" fill="#C8D8E8" stroke="#98AABB" stroke-width=".8"/><rect x="${cx+9}" y="${cy-24}" width="8" height="8" rx="1" fill="#C8D8E8" stroke="#98AABB" stroke-width=".8"/><rect x="${cx-5}" y="${cy-17}" width="10" height="11" rx="1" fill="#8898AA"/><circle cx="${cx}" cy="${cy-12}" r="2" fill="#C8D8E8"/>`;
+  if(type==='coral')return `<path d="M${cx},${cy-4} L${cx},${cy-20} M${cx},${cy-12} L${cx-9},${cy-21} M${cx},${cy-12} L${cx+9},${cy-21} M${cx-9},${cy-21} Q${cx-12},${cy-26} ${cx-7},${cy-26} M${cx+9},${cy-21} Q${cx+12},${cy-26} ${cx+7},${cy-26} M${cx},${cy-20} Q${cx+2},${cy-25} ${cx+4},${cy-24}" fill="none" stroke="#FF9F7F" stroke-width="2.8" stroke-linecap="round"/><circle cx="${cx-6}" cy="${cy-6}" r="2" fill="#FFB8A0" opacity=".7"/>`;
+  return '';
+}
+
+function mkFish(id,x,y,sz,c1,c2,right){const s=sz;return `<g id="${id}" transform="translate(${x},${y}) scale(${right?1:-1},1)"><path d="M${-s+1},0 L${-s*2.1},${-s*.95} L${-s*2.1},${s*.95}Z" fill="${c1}" opacity=".85"/><ellipse cx="0" cy="0" rx="${s}" ry="${s*.58}" fill="${c1}"/><ellipse cx="${s*.1}" cy="${s*.18}" rx="${s*.65}" ry="${s*.33}" fill="${c2}" opacity=".4"/><path d="M${-s*.25},${-s*.56} Q${s*.08},${-s*1.08} ${s*.45},${-s*.56}" fill="${c1}" opacity=".85"/><circle cx="${s*.45}" cy="${-s*.1}" r="${s*.2}" fill="white"/><circle cx="${s*.51}" cy="${-s*.1}" r="${s*.1}" fill="#2a2a2a"/><circle cx="${s*.55}" cy="${-s*.15}" r="${s*.04}" fill="white"/><path d="M${s*.88},${-s*.04} Q${s*.94},${s*.09} ${s*.86},${s*.14}" fill="none" stroke="#555" stroke-width=".5"/></g>`;}
+
+function mkBubble(id,x,y,r){return `<g id="${id}" transform="translate(${x},${y})"><circle r="${r}" fill="none" stroke="rgba(255,255,255,.8)" stroke-width=".9" opacity=".8"/><circle cx="${-r*.32}" cy="${-r*.32}" r="${r*.28}" fill="white" opacity=".32"/></g>`;}
+
+function initCat(cat){
+  const t=cat.tk;
+  if(!cat.fd){cat.fd=Array.from({length:t.fn},(_,i)=>({
+    x:t.fb.x1+(t.fb.x2-t.fb.x1)*(i+1)/(t.fn+1),
+    y:t.fb.y2-8,vx:(Math.random()*.55+.3)*(i%2?-1:1),
+    facing:i%2===0,phase:Math.random()*Math.PI*2,sz:i===0?6.5:5,
+  }));}
+  if(!cat.bd){cat.bd=t.bx.map((x,i)=>({x,y:t.sand.cy-6,r:1.5+i*.38,sp:.2+i*.07}));}
+  if(cat.cf===undefined)cat.cf=0;
+}
+
+function genSVG(cat){
+  initCat(cat);
+  const t=cat.tk,c=cat.color,id=cat.id;
+  const pc=['#4a9f6a','#2d7a4f','#78bf88'];
+  const plants=t.pts.map((p,i)=>mkPlant(p.x,p.y,p.h,p.v,pc[i%3])).join('');
+  const dec=mkDecor(t.dec,t);
+  const fishs=cat.fd.map((f,i)=>mkFish(`f_${id}_${i}`,f.x,f.y,f.sz,c.f1,c.f2,f.facing)).join('');
+  const bubs=cat.bd.map((b,i)=>mkBubble(`b_${id}_${i}`,b.x,b.y,b.r)).join('');
+
+  let outline='',extra='',top='';
+  if(t.key==='bowl'){
+    outline=`<path d="M32,26 Q8,32 8,65 Q8,100 46,100 Q84,100 84,65 Q84,32 60,26Z" fill="none" stroke="${c.l}" stroke-width="2.5" opacity=".8"/>
+    <rect x="31" y="11" width="30" height="16" rx="3.5" fill="${c.bg}" stroke="${c.l}" stroke-width="2" opacity=".8"/>
+    <path d="M26,4 Q46,0 66,4 L64,11 L28,11Z" fill="${c.w}" stroke="${c.l}" stroke-width="1.5" opacity=".65"/>
+    <ellipse cx="38" cy="7" rx="4" ry="1.8" fill="white" opacity=".35"/>`;
+    extra=`<path d="M18,36 Q10,52 10,66 Q12,48 26,36Z" fill="white" opacity=".1"/>`;
+  } else if(t.key==='rect'){
+    outline=`<path d="M6,6 L114,6 L114,82 Q114,86 110,86 L10,86 Q6,86 6,82Z" fill="none" stroke="${c.l}" stroke-width="2.5" opacity=".8"/>
+    <line x1="6" y1="6" x2="114" y2="6" stroke="white" stroke-width="1.5" opacity=".25"/>`;
+    extra=`<rect x="14" y="86" width="10" height="9" rx="2.5" fill="${c.l}" opacity=".55"/>
+    <rect x="96" y="86" width="10" height="9" rx="2.5" fill="${c.l}" opacity=".55"/>
+    <path d="M8,8 L8,80 Q11,55 18,8Z" fill="white" opacity=".08"/>`;
+  } else if(t.key==='hex'){
+    outline=`<path d="M43,6 L77,25 L77,87 L43,106 L9,87 L9,25Z" fill="none" stroke="${c.l}" stroke-width="2.5" opacity=".8"/>`;
+    extra=`<path d="M11,27 L11,85 Q14,60 18,27Z" fill="white" opacity=".09"/>`;
+    top=`<path d="M43,6 L77,25 L74,25 L43,9 L12,25 L9,25Z" fill="${c.w}" opacity=".25"/>`;
+  } else if(t.key==='tall'){
+    outline=`<path d="M6,18 Q6,4 35,4 Q64,4 64,18 L64,106 Q64,120 35,120 Q6,120 6,106Z" fill="none" stroke="${c.l}" stroke-width="2.5" opacity=".8"/>`;
+    extra=`<path d="M8,20 Q8,6 35,6 Q14,6 10,20 L10,106 Q10,118 35,120 Q12,118 8,106Z" fill="white" opacity=".1"/>`;
+    top=`<path d="M6,18 Q6,4 35,4 Q64,4 64,18 Q50,10 20,10 Q8,12 6,18Z" fill="${c.w}" opacity=".2"/>`;
+  }
+
+  const svgH=t.key==='rect'?t.vh+9:t.vh;
+  const nmY=t.sand.cy+3;
+  
+  return `<svg viewBox="0 0 ${t.vw} ${svgH}" xmlns="http://www.w3.org/2000/svg" style="width:${t.vw}px;height:${svgH}px;display:block;overflow:visible">
+  <defs>
+    <clipPath id="cp_${id}"><path d="${t.clip}"/></clipPath>
+    <linearGradient id="wg_${id}" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="${c.l}" stop-opacity=".88"/>
+      <stop offset="45%" stop-color="${c.w}" stop-opacity=".93"/>
+      <stop offset="100%" stop-color="${c.l}" stop-opacity=".88"/>
+    </linearGradient>
+  </defs>
+  <path d="${t.clip}" fill="${c.bg}" opacity=".38"/>
+  <g clip-path="url(#cp_${id})">
+    <ellipse cx="${t.sand.cx}" cy="${t.sand.cy}" rx="${t.sand.rx}" ry="${t.sand.ry}" fill="#E8D5A0" opacity=".85"/>
+    <ellipse cx="${t.sand.cx+4}" cy="${t.sand.cy}" rx="${t.sand.rx*.6}" ry="${t.sand.ry*.5}" fill="#D4B880" opacity=".45"/>
+    ${plants}${dec}
+    <rect id="wr_${id}" x="0" y="${t.wBot}" width="${t.vw}" height="0" fill="url(#wg_${id})"/>
+    <path id="wp_${id}" d="" fill="${c.w}" opacity=".72"/>
+    ${fishs}${bubs}
+    ${extra}
+  </g>
+  ${outline}${top}
+  <text id="pt_${id}" x="${t.vw/2}" y="${t.wBot-14}" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="12.5" font-weight="700" fill="white" opacity="0">0%</text>
+</svg>`;
+}
+
+let cats = [];
+let nextId = 4, activeId = 0;
+let modal = {open: false, name: '', color: COLORS[0], tk: AQTYPES[0]};
+
+let isLoginMode = true;
+function toggleAuthMode() {
+  isLoginMode = !isLoginMode;
+  document.getElementById('authTitle').innerText = isLoginMode ? '로그인' : '회원가입';
+  document.getElementById('authSubmitBtn').innerText = isLoginMode ? '로그인' : '유저 등록';
+  document.getElementById('authToggleBtn').innerText = isLoginMode ? '회원가입이 필요하신가요?' : '이미 계정이 있으신가요?';
+  document.getElementById('authError').innerText = '';
+}
+
+async function submitAuth() {
+  const u = document.getElementById('authUsername').value.trim();
+  const p = document.getElementById('authPassword').value.trim();
+  const err = document.getElementById('authError');
+  err.innerText = '';
+  if(!u || !p) return err.innerText = '아이디와 패스워드를 입력해주세요.';
+  
+  const endpoint = isLoginMode ? '/api/login' : '/api/register';
+  try {
+    const res = await fetch(endpoint, {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({username: u, password: p})
+    });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error || '오류 발생');
+    
+    if(isLoginMode) {
+      localStorage.setItem('aquatodo_token', data.token);
+      localStorage.setItem('aquatodo_user', data.username);
+      document.getElementById('authUsername').value = '';
+      document.getElementById('authPassword').value = '';
+      initApp();
+    } else {
+      alert('회원가입을 환영합니다! 로그인을 진행해주세요.');
+      toggleAuthMode();
+    }
+  } catch(e) {
+    err.innerText = e.message;
+  }
+}
+
+function logout() {
+  localStorage.removeItem('aquatodo_token');
+  localStorage.removeItem('aquatodo_user');
+  document.getElementById('mainApp').style.display = 'none';
+  document.getElementById('authApp').style.display = 'flex';
+  cats.forEach(c => { c.fd = null; c.bd = null; });
+  cats = [];
+}
+
+async function initApp() {
+  const token = localStorage.getItem('aquatodo_token');
+  if(!token) {
+    document.getElementById('mainApp').style.display = 'none';
+    document.getElementById('authApp').style.display = 'flex';
+    return;
+  }
+  document.getElementById('authApp').style.display = 'none';
+  document.getElementById('mainApp').style.display = 'block';
+  document.getElementById('welcomeUser').innerText = localStorage.getItem('aquatodo_user') + '님의 어항 🌊';
+  await loadDataFromServer();
+}
+
+async function loadDataFromServer() {
+  try {
+    const token = localStorage.getItem('aquatodo_token');
+    const res = await fetch('/api/tanks', {
+       headers: {'Authorization': `Bearer ${token}`}
+    });
+    if(res.status === 401 || res.status === 403) return logout();
+    const data = await res.json();
+    if (data && data.cats) {
+      cats = data.cats;
+      nextId = data.nextId !== undefined ? data.nextId : 4;
+      activeId = data.activeId !== undefined ? data.activeId : (cats.length ? cats[0].id : null);
+    } else {
+      cats = [
+        {id:0,name:'공부',color:COLORS[0],tk:AQTYPES[0],tasks:[]},
+        {id:1,name:'운동',color:COLORS[1],tk:AQTYPES[1],tasks:[]},
+        {id:2,name:'집안일',color:COLORS[2],tk:AQTYPES[2],tasks:[]},
+        {id:3,name:'취미',color:COLORS[3],tk:AQTYPES[3],tasks:[]},
+      ];
+      nextId = 4;
+      activeId = 0;
+    }
+  } catch (err) {
+    console.warn('Backend connection failed.', err);
+    cats = [{id:0,name:'서버 연결 오류',color:COLORS[0],tk:AQTYPES[0],tasks:[]}];
+    activeId = 0;
+    nextId = 1;
+  }
+  cats.forEach(initCat);
+  renderTanks();
+  renderPanel();
+}
+
+function saveDataToServer() {
+  const token = localStorage.getItem('aquatodo_token');
+  if(!token) return;
+  fetch('/api/tanks', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+    body: JSON.stringify({ cats, nextId, activeId })
+  }).then(res => { if(res.status===401 || res.status===403) logout(); }).catch(err => console.error('Save failed:', err));
+}
+
+function renderTanks(){
+  const row=document.getElementById('trow');
+  row.innerHTML=cats.map(cat=>`
+  <div class="tc${cat.id===activeId?' active':''}" onclick="sel(${cat.id})">
+    <div>${genSVG(cat)}</div>
+    <div class="tn" style="color:${cat.id===activeId?cat.color.w:'var(--color-text-secondary)'};font-weight:${cat.id===activeId?'500':'400'}">${esc(cat.name)}</div>
+  </div>`).join('')+`
+  <div class="addw">
+    <button class="addbtn" style="width:72px;height:82px" onclick="openMo()">+<span>어항 추가</span></button>
+    <div style="font-size:11px;color:transparent">.</div>
+  </div>`;
+}
+
+function renderPanel(){
+  const cat=cats.find(c=>c.id===activeId);
+  const area=document.getElementById('parea');
+  if(!cat){area.innerHTML='<div class="em" style="margin-top:2rem;">어항이 없습니다. 새 어항을 추가해보세요!</div>';return;}
+  const c=cat.color,done=cat.tasks.filter(t=>t.done).length;
+  area.innerHTML=`<div class="panel">
+  <div class="ph"><div class="pdot" style="background:${c.w}"></div><span>${esc(cat.name)}</span>
+  <span style="font-size:12px;color:var(--color-text-secondary);margin-left:auto">${done}/${cat.tasks.length} · ${Math.round(getPct(cat)*100)}%</span>
+  <button class="mbtn cn" style="height:26px;padding:0 8px;font-size:12px;margin-left:8px;border-color:var(--color-background-danger);color:var(--color-text-danger);background:rgba(211,47,47,0.1);" onclick="delCat(${cat.id})" title="어항 삭제">삭제</button></div>
+  <div class="ir">
+    <input class="ti" id="ti" placeholder="할 일 입력..." maxlength="50" onkeydown="if(event.key==='Enter')addT()"/>
+    <button class="ab" style="background:${c.w}" onclick="addT()">추가</button>
+  </div>
+  <div class="tlist">${cat.tasks.length?cat.tasks.map((t,i)=>`
+  <div class="titem${t.done?' done':''}" onclick="toggle(${cat.id},${i})">
+    <div class="cc" style="${t.done?'background:'+c.w+';border-color:'+c.w:'border-color:'+c.l}">
+      <svg class="ck" viewBox="0 0 9 9" fill="none"><polyline points="1,4.5 3.5,7 8,2" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <span class="tt">${esc(t.text)}</span>
+    <button class="db" onclick="delT(event,${cat.id},${i})">&#x2715;</button>
+  </div>`).join(''):'<div class="em">할 일을 추가해보세요!</div>'}</div>
+</div>`;
+}
+
+function sel(id){activeId=id;renderTanks();renderPanel();saveDataToServer();setTimeout(()=>document.getElementById('ti')?.focus(),50);}
+function addT(){const i=document.getElementById('ti'),tx=i?.value.trim();if(!tx)return;const cat=cats.find(c=>c.id===activeId);if(!cat)return;cat.tasks.push({text:tx,done:false});i.value='';renderPanel();saveDataToServer();setTimeout(()=>document.getElementById('ti')?.focus(),50);}
+function toggle(cid,i){const cat=cats.find(c=>c.id===cid);if(!cat)return;cat.tasks[i].done=!cat.tasks[i].done;renderPanel();saveDataToServer();}
+function delT(e,cid,i){e.stopPropagation();const cat=cats.find(c=>c.id===cid);if(!cat)return;cat.tasks.splice(i,1);renderPanel();saveDataToServer();}
+function delCat(id){openConfirm(id);}
+
+let confirmDelId = null;
+function openConfirm(id) { confirmDelId = id; renderConfirm(); }
+function closeConfirm() { confirmDelId = null; const o = document.getElementById('cmo'); if(o) o.remove(); }
+function execDelCat() {
+  if (confirmDelId !== null) {
+      cats = cats.filter(c => c.id !== confirmDelId);
+      if(activeId === confirmDelId){activeId = cats.length ? cats[0].id : null;}
+      renderTanks(); renderPanel(); closeConfirm(); saveDataToServer();
+  }
+}
+function renderConfirm() {
+  let o = document.getElementById('cmo'); if(o) o.remove();
+  if(confirmDelId === null) return;
+  const d = document.createElement('div'); d.id = 'cmo'; d.className = 'mo';
+  d.innerHTML = `
+  <div class="mbox" style="width: 300px; align-items: center; text-align: center; gap: 1.4rem;">
+    <div style="font-size: 34px; margin-bottom: -15px;">🗑️</div>
+    <div style="display:flex; flex-direction:column; gap:8px">
+      <h3 style="margin:0;">어항 없애기</h3>
+      <p style="font-size:13px; color:var(--color-text-secondary); margin:0; line-height:1.5;">정말로 이 어항을 삭제할까요?<br>등록된 할 일 목록도 모두 지워져요.</p>
+    </div>
+    <div class="mbtns" style="width: 100%; justify-content: center; gap: 10px;">
+      <button class="mbtn cn" style="flex:1" onclick="closeConfirm()">취소</button>
+      <button class="mbtn ok" style="flex:1; background: #D32F2F; box-shadow: 0 4px 10px rgba(211,47,47,0.2);" onclick="execDelCat()">삭제</button>
+    </div>
+  </div>`;
+  d.addEventListener('click', e => { if(e.target === d) closeConfirm(); });
+  document.body.appendChild(d);
+}
+
+function openMo(){modal={open:true,name:'',color:COLORS[nextId%COLORS.length],tk:AQTYPES[nextId%4]};renderMo();}
+function renderMo(){
+  let o=document.getElementById('mo');if(o)o.remove();
+  if(!modal.open)return;
+  const dots=COLORS.map(c=>`<div class="cd${c.id===modal.color.id?' sel':''}" style="background:${c.w}" onclick="mpColor('${c.id}')"></div>`).join('');
+  const topts=AQTYPES.map((t,i)=>`<option value="${i}"${modal.tk===t?' selected':''}>${t.label}</option>`).join('');
+  const d=document.createElement('div');d.id='mo';d.className='mo';
+  d.innerHTML=`<div class="mbox"><h3>새 어항 추가</h3>
+  <input id="mn" placeholder="어항 이름" maxlength="10" value="${esc(modal.name)}" oninput="modal.name=this.value" onkeydown="if(event.key==='Enter')mOk()"/>
+  <select onchange="mpTank(this.value)">${topts}</select>
+  <div class="cpick">${dots}</div>
+  <div class="mbtns">
+    <button class="mbtn cn" onclick="closeMo()">취소</button>
+    <button class="mbtn ok" onclick="mOk()">추가</button>
+  </div></div>`;
+  d.addEventListener('click',e=>{if(e.target===d)closeMo();});
+  document.body.appendChild(d);
+  setTimeout(()=>document.getElementById('mn')?.focus(),50);
+}
+function mpColor(id){modal.color=COLORS.find(c=>c.id===id)||COLORS[0];renderMo();}
+function mpTank(i){modal.tk=AQTYPES[+i];renderMo();}
+function closeMo(){modal.open=false;document.getElementById('mo')?.remove();}
+function mOk(){
+  const name=(document.getElementById('mn')?.value||'').trim()||'어항';
+  const cat={id:nextId++,name,color:modal.color,tk:modal.tk,tasks:[]};
+  initCat(cat);cats.push(cat);activeId=cat.id;
+  closeMo();renderTanks();renderPanel();saveDataToServer();
+}
+
+// animation
+let rt=0;
+function animate(){
+  rt+=0.03;
+  cats.forEach(cat=>{
+    const t=cat.tk,id=cat.id,pct=getPct(cat);
+    cat.cf=(cat.cf||0)+(pct-(cat.cf||0))*.045;
+    const cf=cat.cf,range=t.wBot-t.wTop,wH=cf*range,wY=t.wBot-wH;
+    cat._wy=wY;
+    const wr=document.getElementById(`wr_${id}`);
+    if(wr){wr.setAttribute('y',wY);wr.setAttribute('height',wH+8);}
+    const wp=document.getElementById(`wp_${id}`);
+    if(wp){
+      if(cf>.01){
+        const amp=2.2,freq=.1,ph=rt+id*.9;
+        let d=`M 0 ${wY+Math.sin(ph)*amp} `;
+        for(let x=0;x<=t.vw;x+=4){const y=wY+Math.sin(ph+x*freq)*amp+Math.sin(ph*1.35+x*.07)*(amp*.5);d+=`L ${x} ${y} `;}
+        d+=`L ${t.vw} ${t.wBot+6} L 0 ${t.wBot+6} Z`;
+        wp.setAttribute('d',d);
+      } else wp.setAttribute('d','');
+    }
+    // fish
+    if(cat.fd){
+      const minY=Math.max(wY+7,t.fb.y1),maxY=t.fb.y2;
+      cat.fd.forEach((f,i)=>{
+        f.x+=f.vx;
+        f.y+=Math.sin(rt*.75+f.phase)*.28;
+        if(f.x>=t.fb.x2){f.x=t.fb.x2;f.vx=-Math.abs(f.vx);f.facing=false;}
+        if(f.x<=t.fb.x1){f.x=t.fb.x1;f.vx=Math.abs(f.vx);f.facing=true;}
+        f.y=Math.max(minY,Math.min(maxY,f.y));
+        document.getElementById(`f_${id}_${i}`)?.setAttribute('transform',`translate(${f.x|0},${f.y|0}) scale(${f.facing?1:-1},1)`);
+      });
+    }
+    // bubbles
+    if(cat.bd&&cf>.04){
+      cat.bd.forEach((b,i)=>{
+        b.y-=b.sp;
+        if(b.y<wY+2){b.y=t.sand.cy-6;b.x=t.bx[i]+(Math.random()-.5)*6;}
+        document.getElementById(`b_${id}_${i}`)?.setAttribute('transform',`translate(${b.x|0},${b.y|0})`);
+      });
+    }
+    // pct text
+    const pt=document.getElementById(`pt_${id}`);
+    if(pt){
+      pt.textContent=Math.round(cf*100)+'%';
+      pt.setAttribute('y',Math.max(wY+15,t.wBot-22));
+      pt.setAttribute('opacity',cf>.06?1:0);
+    }
+  });
+  requestAnimationFrame(animate);
+}
+
+initApp();
+requestAnimationFrame(animate);
+</script>
