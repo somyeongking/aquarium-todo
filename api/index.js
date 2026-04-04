@@ -14,11 +14,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 app.use(cors());
 app.use(express.json());
 
-// 자동 정적 웹사이트 배포 (HTML 파일 서비스)
-app.use(express.static(__dirname));
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'aquarium_todo_tracker_v1.html'));
-});
+// Vercel 환경에서는 정적 호스팅이 자동으로 처리되므로 express.static이 필요 없습니다.
 
 // 데이터베이스 연결
 if (!MONGODB_URI) {
@@ -129,6 +125,4 @@ app.post('/api/tanks', authenticateToken, async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 배포용 백엔드 서버가 포트 ${PORT} 에서 구동 중입니다.`);
-});
+module.exports = app;
