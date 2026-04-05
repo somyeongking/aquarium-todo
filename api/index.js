@@ -18,16 +18,13 @@ app.use(express.json());
 
 // 데이터베이스 연결
 if (!MONGODB_URI) {
-  console.error("❌ ERROR: MONGODB_URI가 .env 파일에 정의되지 않았습니다.");
-  console.error("➡️ 사용자 안내 가이드를 참고하여 데이터베이스 주소를 입력해주세요!");
-  process.exit(1);
+  console.error("❌ ERROR: MONGODB_URI가 환경 변수에 정의되지 않았습니다.");
 }
 
 mongoose.connect(MONGODB_URI)
   .then(() => console.log('✅ Connected to MongoDB Cloud Database!'))
   .catch(err => {
     console.error('❌ MongoDB Connection Error:', err);
-    process.exit(1);
   });
 
 // 데이터베이스 모델 설계 (Mongoose Schema)
